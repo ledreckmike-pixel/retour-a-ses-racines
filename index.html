@@ -291,6 +291,18 @@
   form .btn{width:100%;justify-content:center;margin-top:.4rem}
   .form-note{font-size:.8rem;color:var(--ink-soft);margin-top:.9rem;text-align:center}
 
+  /* ---------- Virement IBAN ---------- */
+  .iban{background:linear-gradient(165deg,#FFFDF8,var(--cream));border:1px solid var(--line);border-radius:22px;padding:clamp(1.8rem,4vw,2.6rem);max-width:760px;margin:0 auto;text-align:center;box-shadow:var(--shadow-soft)}
+  .iban h2{font-size:clamp(1.8rem,3.6vw,2.6rem);margin-bottom:.8rem}
+  .iban p{color:var(--ink-soft);max-width:54ch;margin:0 auto 1.6rem}
+  .iban-box{background:var(--ivory);border:1px dashed var(--gold);border-radius:14px;padding:1.1rem 1.2rem;display:flex;flex-direction:column;gap:.25rem;align-items:center;margin-bottom:1.2rem}
+  .iban-box .lbl{font-size:.72rem;text-transform:uppercase;letter-spacing:.2em;color:var(--gold-deep)}
+  .iban-box .val{font-family:var(--sans);font-weight:500;font-size:clamp(1rem,2.4vw,1.25rem);letter-spacing:.06em;color:var(--ink);word-break:break-word}
+  .iban-box .who{font-size:.92rem;color:var(--ink-soft);margin-top:.25rem}
+  .iban-copy{cursor:pointer;border:1px solid var(--gold);background:transparent;color:var(--gold-deep);font-family:var(--sans);font-weight:500;font-size:.9rem;padding:.7rem 1.4rem;border-radius:999px;transition:background .25s,color .25s,transform .2s}
+  .iban-copy:hover{background:var(--gold);color:#2C2620;transform:translateY(-2px)}
+  .iban-note{font-size:.86rem;color:var(--ink-soft);margin:1.3rem auto 0;max-width:52ch}
+
   /* ---------- CTA final ---------- */
   .cta-final{position:relative;text-align:center;padding:clamp(5rem,12vw,9rem) 0;overflow:hidden;
     background:linear-gradient(135deg,var(--sand),var(--cream))}
@@ -611,6 +623,24 @@
   </div>
 </section>
 
+<!-- ============ VIREMENT IBAN ============ -->
+<section class="pad" id="virement" style="background:linear-gradient(180deg,var(--ivory),var(--cream))">
+  <div class="wrap">
+    <div class="iban reveal">
+      <span class="eyebrow">Autre moyen de paiement</span>
+      <h2>Paiement par virement bancaire</h2>
+      <p>Vous préférez régler par virement ? C'est possible et sans frais, idéal pour les accompagnements et les connexions. Utilisez les coordonnées ci-dessous.</p>
+      <div class="iban-box">
+        <span class="lbl">IBAN</span>
+        <span class="val">FR76 2823 3000 0171 2391 6054 868</span>
+        <span class="who">Titulaire : RODRIGUEZ PENALO</span>
+      </div>
+      <button type="button" class="iban-copy" onclick="copyIban(this)">Copier l'IBAN</button>
+      <p class="iban-note">Indiquez en référence votre <strong>prénom et la prestation</strong>, puis envoyez-moi la confirmation par WhatsApp pour valider votre rendez-vous.</p>
+    </div>
+  </div>
+</section>
+
 <!-- ============ CTA FINAL ============ -->
 <section class="cta-final">
   <div class="wrap">
@@ -658,6 +688,16 @@
     entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
   }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Copier l'IBAN
+  function copyIban(btn){
+    const iban = 'FR7628233000017123916054868';
+    const reset = btn.textContent;
+    navigator.clipboard.writeText(iban).then(function(){
+      btn.textContent = 'Copié \u2713';
+      setTimeout(function(){ btn.textContent = reset; }, 2000);
+    }).catch(function(){});
+  }
 </script>
 </body>
 </html>
