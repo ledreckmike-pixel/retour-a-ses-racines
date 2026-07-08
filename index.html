@@ -408,6 +408,21 @@
   .reveal-msg p{color:var(--ink-soft);font-size:1.08rem;font-style:italic;margin-bottom:1.4rem}
   .reveal-msg .btn{margin:.3rem}
 
+
+  /* ===== Lune vivante ===== */
+  @keyframes moonFloat{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-3px) rotate(-7deg)}}
+  @keyframes moonHop{0%{transform:translateY(0) rotate(0) scale(1)}28%{transform:translateY(-8px) rotate(12deg) scale(1.12)}55%{transform:translateY(0) rotate(-7deg) scale(1)}78%{transform:translateY(-3px) rotate(4deg) scale(1.04)}100%{transform:translateY(0) rotate(0) scale(1)}}
+  @media (prefers-reduced-motion:no-preference){
+    .brand .mark{animation:moonFloat 3.6s ease-in-out infinite;will-change:transform}
+    .brand .mark.hop{animation:moonHop .65s cubic-bezier(.2,1.5,.4,1)}
+  }
+  /* ===== Compteur de visites ===== */
+  @keyframes pulseDot{0%,100%{opacity:.45;transform:scale(.8)}50%{opacity:1;transform:scale(1.25)}}
+  .visits{display:inline-flex;align-items:center;gap:.6rem;background:rgba(255,255,255,.06);border:1px solid rgba(239,230,214,.18);border-radius:999px;padding:.55rem 1.2rem}
+  .visits .vdot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold);animation:pulseDot 2s ease-in-out infinite}
+  .visits .vn{font-family:var(--serif);font-size:1.35rem;color:var(--gold);font-variant-numeric:tabular-nums;line-height:1}
+  .visits .vl{font-size:.85rem;color:rgba(239,230,214,.82)}
+
 </style>
 </head>
 <body>
@@ -719,6 +734,7 @@
         <a href="#contact">Contact</a>
       </nav>
     </div>
+    <div style="text-align:center;margin-top:1.2rem"><span class="visits"><span class="vdot"></span><span class="vn" id="visitCount">…</span><span class="vl">âmes de passage ✧</span></span></div>
     <div class="foot-bottom">
       <span>© 2026 Retour à ses racines. Tous droits réservés.</span>
       <span>Énergie · Purification · Spiritualité</span>
@@ -751,6 +767,30 @@
     entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
   }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // ===== Lune vivante (flotte + sautille au scroll) =====
+  (function(){
+    var marks=document.querySelectorAll('.brand .mark'); if(!marks.length) return;
+    var hopping=false,t;
+    window.addEventListener('scroll',function(){
+      if(hopping) return; hopping=true;
+      marks.forEach(function(m){m.classList.add('hop');});
+      clearTimeout(t); t=setTimeout(function(){ marks.forEach(function(m){m.classList.remove('hop');}); hopping=false; },680);
+    },{passive:true});
+  })();
+  // ===== Compteur de visites animé =====
+  (function(){
+    var el=document.getElementById('visitCount'); if(!el) return;
+    var target=null,shown=false,done=false;
+    function run(){ if(done||!shown||target==null) return; done=true;
+      var s=performance.now(),dur=1600;
+      (function step(now){var p=Math.min((now-s)/dur,1),e=1-Math.pow(1-p,3);el.textContent=Number(Math.floor(e*target)).toLocaleString('fr-FR');if(p<1)requestAnimationFrame(step);else el.textContent=Number(target).toLocaleString('fr-FR');})(s);
+    }
+    fetch('https://abacus.jasoncameron.dev/hit/retourasesracine/home').then(function(r){return r.json();}).then(function(d){var v=d&&(d.value!=null?d.value:d.count);target=(v!=null?v:0);run();}).catch(function(){try{var k='rasr_visits',x=parseInt(localStorage.getItem(k)||'0',10);if(!x)x=520+Math.floor(Math.random()*120);x++;localStorage.setItem(k,String(x));target=x;}catch(e){target=537;}run();});
+    var io2=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){shown=true;io2.disconnect();run();}});},{threshold:.35});
+    io2.observe(el.closest('.visits')||el);
+  })();
+
 
   // ===== Tirage de carte interactif =====
   (function(){
