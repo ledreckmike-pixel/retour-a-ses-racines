@@ -410,11 +410,11 @@
 
 
   /* ===== Lune vivante ===== */
-  @keyframes moonFloat{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-3px) rotate(-7deg)}}
-  @keyframes moonHop{0%{transform:translateY(0) rotate(0) scale(1)}28%{transform:translateY(-8px) rotate(12deg) scale(1.12)}55%{transform:translateY(0) rotate(-7deg) scale(1)}78%{transform:translateY(-3px) rotate(4deg) scale(1.04)}100%{transform:translateY(0) rotate(0) scale(1)}}
+  @keyframes moonFloat{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-1.5px) rotate(-6deg)}}
+  @keyframes moonHop{0%{transform:translateY(0) rotate(0)}35%{transform:translateY(-3px) rotate(10deg)}70%{transform:translateY(0) rotate(-4deg)}100%{transform:translateY(0) rotate(0)}}
   @media (prefers-reduced-motion:no-preference){
-    .brand .mark{animation:moonFloat 3.6s ease-in-out infinite;will-change:transform}
-    .brand .mark.hop{animation:moonHop .65s cubic-bezier(.2,1.5,.4,1)}
+    .brand .mark svg{animation:moonFloat 3.8s ease-in-out infinite;transform-origin:center;will-change:transform}
+    .brand .mark svg.hop{animation:moonHop .6s ease}
   }
   /* ===== Compteur de visites ===== */
   @keyframes pulseDot{0%,100%{opacity:.45;transform:scale(.8)}50%{opacity:1;transform:scale(1.25)}}
@@ -770,7 +770,7 @@
 
   // ===== Lune vivante (flotte + sautille au scroll) =====
   (function(){
-    var marks=document.querySelectorAll('.brand .mark'); if(!marks.length) return;
+    var marks=document.querySelectorAll('.brand .mark svg'); if(!marks.length) return;
     var hopping=false,t;
     window.addEventListener('scroll',function(){
       if(hopping) return; hopping=true;
