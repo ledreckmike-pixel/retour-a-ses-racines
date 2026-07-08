@@ -7,15 +7,18 @@
 <meta name="description" content="Retour à ses racines vous accompagne avec des soins énergétiques, des consultations à distance, des accompagnements spirituels et des rituels de purification. Retrouvez clarté, apaisement et alignement. Réservez votre séance." />
 <meta name="author" content="Retour à ses racines" />
 <meta name="theme-color" content="#FAF6EF" />
-<link rel="canonical" href="https://ledreckmike-pixel.github.io/retour-a-ses-racines/" />
+<link rel="canonical" href="https://retourasesracine.com/" />
 
 <!-- Open Graph -->
 <meta property="og:type" content="website" />
 <meta property="og:locale" content="fr_FR" />
 <meta property="og:title" content="Retour à ses racines · Énergie, purification et spiritualité" />
 <meta property="og:description" content="Soins énergétiques, consultations et accompagnements spirituels à distance. Retrouvez clarté, apaisement et alignement intérieur." />
-<meta property="og:url" content="https://ledreckmike-pixel.github.io/retour-a-ses-racines/" />
+<meta property="og:url" content="https://retourasesracine.com/" />
+<meta property="og:image" content="https://retourasesracine.com/images/fondatrice.jpg" />
+<meta property="og:image:alt" content="Retour à ses racines — soins énergétiques, purification et spiritualité" />
 <meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://retourasesracine.com/images/fondatrice.jpg" />
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -29,7 +32,7 @@
   "@type": "ProfessionalService",
   "name": "Retour à ses racines",
   "description": "Soins énergétiques, consultations et accompagnements spirituels à distance.",
-  "url": "https://ledreckmike-pixel.github.io/retour-a-ses-racines/",
+  "url": "https://retourasesracine.com/",
   "priceRange": "€€",
   "areaServed": "À distance, dans le monde entier",
   "serviceType": ["Soin énergétique", "Consultation spirituelle", "Akonpayman spirityèl", "Purification", "Méditasyon gidé"]
@@ -74,6 +77,7 @@
   }
   h1,h2,h3,h4{font-family:var(--serif);font-weight:500;line-height:1.08;letter-spacing:.01em}
   a{color:inherit;text-decoration:none}
+  :focus-visible{outline:2px solid var(--gold-deep);outline-offset:3px;border-radius:4px}
   ::selection{background:rgba(183,155,227,.5);color:var(--ink)}
   img{max-width:100%;display:block}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,5vw,48px)}
@@ -122,9 +126,12 @@
   .nav-links a:hover{color:var(--gold-deep)}
   .nav-links a:hover::after{width:100%}
   .nav-cta{display:flex;align-items:center;gap:1rem}
-  .burger{display:none;background:none;border:0;cursor:pointer;width:30px;height:24px;position:relative}
-  .burger span{position:absolute;left:0;height:2px;width:100%;background:var(--ink);border-radius:2px;transition:.3s}
-  .burger span:nth-child(1){top:2px}.burger span:nth-child(2){top:11px}.burger span:nth-child(3){top:20px}
+  .burger{display:none;background:none;border:0;cursor:pointer;width:44px;height:44px;position:relative}
+  .burger span{position:absolute;left:7px;height:2px;width:30px;background:var(--ink);border-radius:2px;transition:transform .3s, opacity .3s, top .3s}
+  .burger span:nth-child(1){top:15px}.burger span:nth-child(2){top:21px}.burger span:nth-child(3){top:27px}
+  .burger.open span:nth-child(1){top:21px;transform:rotate(45deg)}
+  .burger.open span:nth-child(2){opacity:0}
+  .burger.open span:nth-child(3){top:21px;transform:rotate(-45deg)}
 
   /* ---------- HERO (médaillon central, inspiration minimaliste) ---------- */
   .hero{
@@ -145,8 +152,8 @@
   .hero-actions{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center}
 
   .hero-foot{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-top:1.4rem;margin-top:1.4rem;border-top:1px solid var(--line)}
-  .hero-social{display:flex;gap:1.2rem}
-  .hero-social a{color:var(--ink-soft);transition:color .25s, transform .25s}
+  .hero-social{display:flex;gap:.6rem}
+  .hero-social a{color:var(--ink-soft);transition:color .25s, transform .25s;display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px}
   .hero-social a:hover{color:var(--gold-deep);transform:translateY(-2px)}
   .hero-social svg{width:20px;height:20px}
   .hero-loc{font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
@@ -283,6 +290,7 @@
   form{background:rgba(250,246,239,.97);border-radius:24px;padding:clamp(1.6rem,3vw,2.4rem);box-shadow:var(--shadow);color:var(--ink)}
   .field{display:flex;flex-direction:column;gap:.45rem;margin-bottom:1.1rem}
   .field label{font-size:.85rem;font-weight:500;letter-spacing:.02em}
+  .field label .req{color:var(--gold-deep);margin-left:.15em}
   .field input,.field select,.field textarea{
     font-family:var(--sans);font-size:.95rem;color:var(--ink);background:#fff;
     border:1px solid var(--line);border-radius:14px;padding:.85rem 1rem;transition:border-color .25s, box-shadow .25s;
@@ -355,6 +363,51 @@
     .reveal{opacity:1;transform:none;transition:none}
     html{scroll-behavior:auto}
   }
+
+  /* ===== Hero animé ===== */
+  @keyframes aurora{0%{opacity:.6;transform:scale(1) translate(0,0)}100%{opacity:1;transform:scale(1.2) translate(-2%,2%)}}
+  @keyframes heroIn{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+  @keyframes shimmerTxt{to{background-position:200% center}}
+  @keyframes twinkle{0%,100%{opacity:.15;transform:scale(.6)}50%{opacity:1;transform:scale(1.35)}}
+  .hero-fx{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+  .hero-fx .star{position:absolute;border-radius:50%;background:#fffdf5;box-shadow:0 0 6px 1px rgba(255,244,214,.9);opacity:.5}
+  .hero-fx .star.g{background:var(--gold);box-shadow:0 0 9px 2px rgba(191,160,104,.85)}
+  @media (prefers-reduced-motion:no-preference){
+    .hero::before{animation:aurora 20s ease-in-out infinite alternate}
+    .hero-center{animation:heroIn 1.1s cubic-bezier(.16,1,.3,1) both}
+    .hero-fx .star{animation:twinkle 4.5s ease-in-out infinite}
+    .hero-center h1 em{background:linear-gradient(90deg,var(--gold-deep),#e6cf9a 45%,var(--gold-deep));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;background-size:200% auto;animation:shimmerTxt 7s linear infinite}
+  }
+
+  /* ===== Tirage de carte ===== */
+  .tirage{background:linear-gradient(180deg,var(--cream),#efe4f1)}
+  .tirage .intro{text-align:center;max-width:60ch;margin:0 auto clamp(2rem,4vw,3rem)}
+  .tirage .intro h2{font-size:clamp(2rem,4.4vw,3.2rem);margin:.6rem 0 1rem}
+  .tirage .intro .lead{margin:0 auto}
+  .deck-hint{text-align:center;color:var(--ink-soft);font-size:.98rem;margin-bottom:1.3rem;min-height:1.4em}
+  .deck{position:relative;min-height:290px;display:flex;justify-content:center;align-items:center;perspective:1300px;margin-bottom:1.6rem}
+  .tcard{position:relative;width:clamp(128px,30vw,164px);height:clamp(196px,46vw,246px);margin:0 -12px;border:0;background:none;padding:0;cursor:default;transition:transform .55s cubic-bezier(.16,1,.3,1),opacity .4s;transform-style:preserve-3d}
+  .tcard.fan0{transform:rotate(-11deg) translateY(16px)}
+  .tcard.fan1{transform:rotate(0deg) translateY(-6px);z-index:2}
+  .tcard.fan2{transform:rotate(11deg) translateY(16px)}
+  .deck.ready .tcard{cursor:pointer}
+  .deck.ready .tcard:hover{transform:translateY(-20px) scale(1.04)}
+  .tcard .tc-inner{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .85s cubic-bezier(.16,1,.3,1);border-radius:16px;box-shadow:var(--shadow)}
+  .tcard.flipped .tc-inner{transform:rotateY(180deg)}
+  .tc-back,.tc-front{position:absolute;inset:0;border-radius:16px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+  .tc-back{background:linear-gradient(160deg,#4a3568,#2e2147);border:2px solid var(--gold)}
+  .tc-back::before{content:"\263E";font-size:3.2rem;color:var(--gold);filter:drop-shadow(0 0 8px rgba(191,160,104,.6))}
+  .tc-back::after{content:"";position:absolute;inset:8px;border:1px solid rgba(191,160,104,.45);border-radius:11px}
+  .tc-front{background:linear-gradient(160deg,#fffdf8,var(--cream));border:2px solid var(--gold);transform:rotateY(180deg);text-align:center;padding:1rem}
+  .tc-front .sym{font-size:3rem;line-height:1;margin-bottom:.45rem}
+  .tc-front .nm{font-family:var(--serif);font-size:1.32rem;color:var(--gold-deep);line-height:1.1}
+  .draw-actions{text-align:center}
+  .reveal-msg{max-width:520px;margin:1.8rem auto 0;text-align:center;background:#fffdf8;border:1px solid var(--line);border-radius:20px;padding:2rem 1.8rem;box-shadow:var(--shadow-soft);animation:heroIn .6s ease both}
+  .reveal-msg .rm-symbol{font-size:3rem;line-height:1;margin-bottom:.3rem}
+  .reveal-msg h3{font-family:var(--serif);font-size:1.9rem;color:var(--gold-deep);margin-bottom:.6rem}
+  .reveal-msg p{color:var(--ink-soft);font-size:1.08rem;font-style:italic;margin-bottom:1.4rem}
+  .reveal-msg .btn{margin:.3rem}
+
 </style>
 </head>
 <body>
@@ -366,19 +419,21 @@
     <nav class="nav-links" id="menu">
       <a href="#apropos">À propos</a>
       <a href="#prestations">Prestations</a>
+      <a href="#tirage">Tirage</a>
       <a href="#temoignages">Témoignages</a>
       <a href="#faq">FAQ</a>
       <a href="#contact">Contact</a>
     </nav>
     <div class="nav-cta">
       <a href="https://retourasesracine.simplybook.it/v2/" target="_blank" rel="noopener" class="btn btn-primary">Rézèvé on séyans</a>
-      <button class="burger" id="burger" aria-label="Ouvrir le menu"><span></span><span></span><span></span></button>
+      <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-controls="menu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </div>
 </header>
 
 <!-- ============ HERO ============ -->
 <section class="hero" id="accueil">
+  <div class="hero-fx" aria-hidden="true"><span class="star g" style="top:8%;left:18%;width:3.9px;height:3.9px;animation-duration:4.1s;animation-delay:4.0s"></span><span class="star" style="top:14%;left:60%;width:3.1px;height:3.1px;animation-duration:4.6s;animation-delay:3.7s"></span><span class="star" style="top:22%;left:33%;width:3.2px;height:3.2px;animation-duration:5.1s;animation-delay:2.0s"></span><span class="star g" style="top:30%;left:76%;width:4.4px;height:4.4px;animation-duration:4.5s;animation-delay:3.3s"></span><span class="star" style="top:40%;left:14%;width:4.5px;height:4.5px;animation-duration:5.2s;animation-delay:2.2s"></span><span class="star" style="top:47%;left:52%;width:3.5px;height:3.5px;animation-duration:4.0s;animation-delay:0.2s"></span><span class="star g" style="top:57%;left:27%;width:3.1px;height:3.1px;animation-duration:5.3s;animation-delay:1.7s"></span><span class="star" style="top:65%;left:71%;width:2.7px;height:2.7px;animation-duration:5.4s;animation-delay:3.8s"></span><span class="star" style="top:73%;left:21%;width:2.5px;height:2.5px;animation-duration:4.4s;animation-delay:0.0s"></span><span class="star g" style="top:80%;left:47%;width:3.5px;height:3.5px;animation-duration:5.9s;animation-delay:0.1s"></span><span class="star" style="top:86%;left:64%;width:2.8px;height:2.8px;animation-duration:6.3s;animation-delay:1.9s"></span><span class="star" style="top:91%;left:33%;width:5.0px;height:5.0px;animation-duration:5.7s;animation-delay:0.1s"></span><span class="star g" style="top:12%;left:44%;width:2.6px;height:2.6px;animation-duration:6.0s;animation-delay:0.9s"></span><span class="star" style="top:35%;left:50%;width:3.6px;height:3.6px;animation-duration:4.3s;animation-delay:3.0s"></span><span class="star" style="top:54%;left:12%;width:3.6px;height:3.6px;animation-duration:5.1s;animation-delay:3.6s"></span><span class="star g" style="top:68%;left:40%;width:3.0px;height:3.0px;animation-duration:5.5s;animation-delay:2.9s"></span></div>
   <div class="wrap">
     <div class="hero-center">
       <span class="eyebrow">Énergie · Purification · Spiritualité</span>
@@ -505,6 +560,33 @@
 </section>
 
 <!-- ============ TÉMOIGNAGES ============ -->
+<!-- ============ TIRAGE DE CARTE ============ -->
+<section class="tirage pad" id="tirage">
+  <div class="wrap">
+    <div class="intro reveal">
+      <span class="eyebrow">Nouveau · 15€ la question</span>
+      <h2>Tirage de carte</h2>
+      <p class="lead">Une question vous préoccupe&nbsp;? Laissez une carte vous offrir un premier message. Mélangez le jeu, choisissez votre carte… et recevez votre guidance. 🌙</p>
+    </div>
+    <p class="deck-hint" id="deckHint">Appuyez sur «&nbsp;Mélanger les cartes&nbsp;» pour commencer.</p>
+    <div class="deck" id="deck">
+      <button class="tcard fan0" type="button" aria-label="Carte 1"><span class="tc-inner"><span class="tc-back"></span><span class="tc-front"><span class="sym"></span><span class="nm"></span></span></span></button>
+      <button class="tcard fan1" type="button" aria-label="Carte 2"><span class="tc-inner"><span class="tc-back"></span><span class="tc-front"><span class="sym"></span><span class="nm"></span></span></span></button>
+      <button class="tcard fan2" type="button" aria-label="Carte 3"><span class="tc-inner"><span class="tc-back"></span><span class="tc-front"><span class="sym"></span><span class="nm"></span></span></span></button>
+    </div>
+    <div class="draw-actions reveal">
+      <button class="btn btn-primary" id="shuffleBtn" type="button">Mélanger les cartes</button>
+    </div>
+    <div class="reveal-msg" id="revealMsg" hidden>
+      <div class="rm-symbol"></div>
+      <h3 class="rm-title"></h3>
+      <p class="rm-text"></p>
+      <a href="https://retourasesracine.simplybook.it/v2/" target="_blank" rel="noopener" class="btn btn-primary">Réserver mon tirage · 15€</a>
+      <button class="btn btn-ghost" id="redrawBtn" type="button">Tirer une autre carte</button>
+    </div>
+  </div>
+</section>
+
 <section class="testi pad" id="temoignages">
   <div class="wrap">
     <div class="section-head reveal">
@@ -581,11 +663,11 @@
     </div>
     <form action="mailto:martinarodriguez@retourasesracine.com" method="post" enctype="text/plain">
       <div class="field">
-        <label for="nom">Votre prénom</label>
+        <label for="nom">Votre prénom<span class="req" aria-hidden="true">*</span></label>
         <input id="nom" name="nom" type="text" placeholder="Comment puis-je vous appeler ?" required />
       </div>
       <div class="field">
-        <label for="email">Votre email</label>
+        <label for="email">Votre email<span class="req" aria-hidden="true">*</span></label>
         <input id="email" name="email" type="email" placeholder="vous@exemple.com" required />
       </div>
       <div class="field">
@@ -631,6 +713,7 @@
       <nav class="foot-links">
         <a href="#apropos">À propos</a>
         <a href="#prestations">Prestations</a>
+      <a href="#tirage">Tirage</a>
         <a href="#temoignages">Témoignages</a>
         <a href="#faq">FAQ</a>
         <a href="#contact">Contact</a>
@@ -652,14 +735,78 @@
   // Menu mobile
   const burger = document.getElementById('burger');
   const menu = document.getElementById('menu');
-  burger.addEventListener('click', () => menu.classList.toggle('open'));
-  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.remove('open')));
+  const setMenu = (open) => {
+    menu.classList.toggle('open', open);
+    burger.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    burger.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+  };
+  burger.addEventListener('click', () => setMenu(!menu.classList.contains('open')));
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+  // Fermer au clavier (Échap)
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') setMenu(false); });
 
   // Révélations au scroll (IntersectionObserver)
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
   }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // ===== Tirage de carte interactif =====
+  (function(){
+    var deck=document.getElementById('deck'); if(!deck) return;
+    var cards=Array.prototype.slice.call(deck.querySelectorAll('.tcard'));
+    var hint=document.getElementById('deckHint');
+    var shuffleBtn=document.getElementById('shuffleBtn');
+    var msg=document.getElementById('revealMsg');
+    var redraw=document.getElementById('redrawBtn');
+    var draws=[
+      {s:'🌙',n:'La Lune',t:"Écoutez votre intuition : elle connaît déjà votre réponse."},
+      {s:'✨',n:"L'Étoile",t:"Gardez espoir. Une lumière douce éclaire déjà votre chemin."},
+      {s:'☀️',n:'Le Soleil',t:"Une renaissance approche. Osez rayonner pleinement."},
+      {s:'🌿',n:'Les Racines',t:"Revenez à votre source. Votre force vient de loin."},
+      {s:'🕊️',n:'La Paix',t:"Déposez ce qui pèse. La sérénité vous attend."},
+      {s:'🔑',n:'La Clé',t:"Une porte s'ouvre. Vous avez déjà tout pour avancer."},
+      {s:'💧',n:'La Purification',t:"Libérez-vous. Laissez partir ce qui n'est plus vous."},
+      {s:'🤲',n:'La Protection',t:"Vous êtes guidé(e) et protégé(e). Avancez en confiance."}
+    ];
+    var ready=false;
+    function reset(){
+      ready=false; deck.classList.remove('ready');
+      cards.forEach(function(c,i){ c.classList.remove('flipped'); c.style.opacity=''; c.style.transform=''; });
+      msg.hidden=true; shuffleBtn.hidden=false;
+      hint.textContent='Appuyez sur « Mélanger les cartes » pour commencer.';
+    }
+    function shuffle(){
+      msg.hidden=true; hint.textContent='Mélange en cours…';
+      cards.forEach(function(c){ c.classList.remove('flipped'); c.style.opacity=''; c.style.transform='translateY(-28px) rotate('+(Math.random()*30-15)+'deg)'; });
+      setTimeout(function(){
+        cards.forEach(function(c){ c.style.transform=''; });
+        deck.classList.add('ready'); ready=true; shuffleBtn.hidden=true;
+        hint.textContent='Concentrez-vous sur votre question, puis choisissez une carte.';
+      },700);
+    }
+    function pick(card){
+      if(!ready) return; ready=false;
+      var d=draws[Math.floor(Math.random()*draws.length)];
+      var front=card.querySelector('.tc-front');
+      front.querySelector('.sym').textContent=d.s;
+      front.querySelector('.nm').textContent=d.n;
+      card.classList.add('flipped');
+      cards.forEach(function(c){ if(c!==card) c.style.opacity='.25'; });
+      setTimeout(function(){
+        msg.querySelector('.rm-symbol').textContent=d.s;
+        msg.querySelector('.rm-title').textContent=d.n;
+        msg.querySelector('.rm-text').textContent='« '+d.t+' »';
+        msg.hidden=false; hint.textContent='';
+        msg.scrollIntoView({behavior:'smooth',block:'center'});
+      },900);
+    }
+    shuffleBtn.addEventListener('click',shuffle);
+    cards.forEach(function(c){ c.addEventListener('click',function(){ pick(c); }); });
+    redraw.addEventListener('click',function(){ reset(); setTimeout(shuffle,60); });
+  })();
+
 </script>
 </body>
 </html>
