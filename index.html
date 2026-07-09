@@ -516,6 +516,19 @@
   @keyframes smokeRise{0%{opacity:0;transform:translate(0,0) scale(.5)}16%{opacity:.82}100%{opacity:0;transform:translate(var(--tx,0),var(--ty,-340px)) scale(var(--sc,2))}}
   .boom-flash{position:fixed;inset:0;z-index:102;pointer-events:none;background:radial-gradient(circle,rgba(255,250,235,.92),rgba(230,207,154,.32) 50%,transparent 75%);animation:flashOut .65s ease-out forwards}
   @keyframes flashOut{0%{opacity:0}12%{opacity:.85}100%{opacity:0}}
+
+  /* ===== Laisser un témoignage ===== */
+  .share-form{max-width:640px;margin:0 auto}
+  .share .row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  .star-input{display:flex;gap:.4rem;font-size:1.7rem;user-select:none;margin-top:.15rem}
+  .star-input span{color:#dccfb6;cursor:pointer;transition:color .15s,transform .15s}
+  .star-input span.on{color:var(--gold)}
+  .star-input span:hover{transform:scale(1.18)}
+  .share-ok{max-width:640px;margin:0 auto;text-align:center;background:rgba(250,246,239,.97);border-radius:24px;padding:2.6rem 2rem;box-shadow:var(--shadow);animation:fade .5s ease both}
+  .share-ok .em{font-size:2.6rem;line-height:1}
+  .share-ok h3{font-family:var(--serif);font-size:1.8rem;color:var(--gold-deep);margin:.4rem 0 .6rem}
+  .share-ok p{color:var(--ink-soft);max-width:44ch;margin:0 auto}
+  @media(max-width:680px){.share .row2{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -740,6 +753,27 @@
   </div>
 </section>
 
+<!-- ============ LAISSER UN TÉMOIGNAGE ============ -->
+<section class="share pad" id="partage" style="background:linear-gradient(180deg,var(--ivory),var(--cream))">
+  <div class="wrap">
+    <div class="reveal" style="text-align:center;max-width:60ch;margin:0 auto 2.4rem">
+      <span class="eyebrow">Votre voix</span>
+      <h2 style="font-size:clamp(2rem,4.4vw,3.2rem);margin:1rem 0 .8rem">Partagez votre expérience</h2>
+      <p class="lead" style="margin:0 auto">Votre témoignage est précieux. Racontez votre ressenti : il pourra éclairer d'autres âmes en chemin. 🌙</p>
+    </div>
+    <form class="share-form reveal d1" id="testiForm" novalidate>
+      <div class="row2">
+        <div class="field"><label for="tName">Votre prénom</label><input id="tName" name="prenom" type="text" placeholder="Comment vous appelez-vous ?" required /></div>
+        <div class="field"><label for="tCity">Votre ville (facultatif)</label><input id="tCity" name="ville" type="text" placeholder="Ex. Pointe-à-Pitre" /></div>
+      </div>
+      <div class="field"><label>Votre note</label><div class="star-input" id="starInput" aria-label="Note"></div></div>
+      <div class="field"><label for="tMsg">Votre témoignage</label><textarea id="tMsg" name="temoignage" placeholder="Partagez votre expérience, votre ressenti…" required></textarea></div>
+      <button type="submit" class="btn btn-primary">Envoyer mon témoignage</button>
+      <p class="form-note">Votre témoignage nous est transmis et sera publié avec soin, après lecture. 🌿</p>
+    </form>
+  </div>
+</section>
+
 <!-- ============ FAQ ============ -->
 <section class="pad" id="faq" style="background:var(--ivory)">
   <div class="wrap faq-grid">
@@ -892,6 +926,33 @@
     entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
   }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // ===== Laisser un témoignage =====
+  (function(){
+    var form=document.getElementById('testiForm'); if(!form) return;
+    var wrap=document.getElementById('starInput'); var rating=5; var stars=[];
+    for(var i=1;i<=5;i++){ (function(i){ var s=document.createElement('span'); s.textContent='★'; wrap.appendChild(s); stars.push(s);
+      s.addEventListener('click',function(){ rating=i; paint(rating); });
+      s.addEventListener('mouseenter',function(){ paint(i); });
+    })(i); }
+    wrap.addEventListener('mouseleave',function(){ paint(rating); });
+    function paint(n){ for(var k=0;k<stars.length;k++){ stars[k].classList.toggle('on', k<n); } }
+    paint(rating);
+    form.addEventListener('submit',function(e){
+      e.preventDefault();
+      var name=(document.getElementById('tName').value||'').trim();
+      var city=(document.getElementById('tCity').value||'').trim();
+      var msg=(document.getElementById('tMsg').value||'').trim();
+      if(!name||!msg){ alert('Merci d’indiquer votre prénom et votre témoignage.'); return; }
+      var body='Prénom : '+name+'\n'+(city?('Ville : '+city+'\n'):'')+'Note : '+rating+'/5\n\nTémoignage :\n'+msg;
+      var href='mailto:martinarodriguez@retourasesracine.com?subject='+encodeURIComponent('Nouveau témoignage · Retour à ses racines')+'&body='+encodeURIComponent(body);
+      window.location.href=href;
+      var ok=document.createElement('div'); ok.className='share-ok';
+      ok.innerHTML='<div class="em">🌙</div><h3>Merci du fond du cœur</h3><p>Votre témoignage part vers notre messagerie. Envoyez le message, et il sera publié avec soin. ✨</p>';
+      form.replaceWith(ok);
+    });
+  })();
+
 
   // ===== Entrée spectaculaire + ambiance mystique =====
   (function(){
