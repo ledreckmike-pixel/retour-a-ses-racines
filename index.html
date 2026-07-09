@@ -425,20 +425,23 @@
 
 
   /* ===== Luna : la lune-mascotte vivante ===== */
-  .luna{position:fixed;left:18px;bottom:18px;z-index:40;width:64px;height:64px;cursor:pointer;filter:drop-shadow(0 6px 16px rgba(126,91,176,.45))}
+  .luna{position:fixed;top:0;left:0;z-index:40;width:60px;height:60px;cursor:pointer;filter:drop-shadow(0 6px 16px rgba(126,91,176,.5));transform:translate(18px,calc(100dvh - 80px));transition:transform 6.5s cubic-bezier(.45,0,.55,1)}
   .luna-moon{width:100%;height:100%;overflow:visible;display:block}
   .luna-eyes{transform-box:fill-box;transform-origin:center}
   .luna-bubble{position:absolute;left:72px;bottom:14px;white-space:nowrap;background:var(--ink);color:#FBF6EC;font-size:.82rem;font-weight:500;padding:.5rem .9rem;border-radius:12px;opacity:0;transform:translateX(-6px);transition:opacity .35s,transform .35s;pointer-events:none;box-shadow:var(--shadow-soft)}
   .luna-bubble::after{content:"";position:absolute;left:-4px;bottom:13px;width:10px;height:10px;background:var(--ink);transform:rotate(45deg)}
   .luna:hover .luna-bubble{opacity:1;transform:translateX(0)}
   @media (prefers-reduced-motion:no-preference){
-    .luna{animation:lunaFloat 4.2s ease-in-out infinite}
+    .luna-moon{animation:lunaFloat 4.2s ease-in-out infinite}
     .luna-eyes{animation:lunaBlink 5s ease-in-out infinite}
   }
   @keyframes lunaFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
   @keyframes lunaBlink{0%,90%,100%{transform:scaleY(1)}94%{transform:scaleY(.12)}}
-  @media(max-width:680px){.luna{width:52px;height:52px;left:12px;bottom:12px}.luna-bubble{display:none}}
+  @media(max-width:680px){.luna{width:52px;height:52px}.luna-bubble{display:none}}
 
+
+  .luna-spark{position:fixed;z-index:39;color:var(--gold);pointer-events:none;line-height:1;filter:drop-shadow(0 0 5px rgba(191,160,104,.85));animation:sparkFade 1.15s ease-out forwards}
+  @keyframes sparkFade{0%{opacity:0;transform:scale(.3) translateY(0)}25%{opacity:1;transform:scale(1) translateY(-4px)}100%{opacity:0;transform:scale(.6) translateY(-18px)}}
 </style>
 </head>
 <body>
@@ -800,12 +803,36 @@
   }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-  // ===== Luna : accueil + retour en haut =====
+  // ===== Luna : vagabonde partout + étincelles =====
   (function(){
     var luna=document.getElementById('luna'); if(!luna) return;
     var bubble=luna.querySelector('.luna-bubble');
-    setTimeout(function(){ if(!bubble) return; bubble.style.opacity='1'; bubble.style.transform='translateX(0)'; setTimeout(function(){ bubble.style.opacity=''; bubble.style.transform=''; },4500); },1300);
+    setTimeout(function(){ if(bubble){ bubble.style.opacity='1'; setTimeout(function(){ bubble.style.opacity=''; },4500); } },1300);
     luna.addEventListener('click',function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduce) return;
+    function wander(){
+      var m=60, w=luna.offsetWidth||60, ht=luna.offsetHeight||60;
+      var maxX=Math.max(m, window.innerWidth - w - m);
+      var maxY=Math.max(m, window.innerHeight - ht - m);
+      var x=m + Math.random()*(maxX-m);
+      var y=m + Math.random()*(maxY-m);
+      luna.style.transform='translate('+x+'px,'+y+'px)';
+    }
+    setTimeout(wander, 900);
+    setInterval(wander, 6500);
+    var syms=['✦','✧','⋆','✨'];
+    setInterval(function(){
+      if(document.hidden) return;
+      var r=luna.getBoundingClientRect();
+      var s=document.createElement('span'); s.className='luna-spark';
+      s.textContent=syms[Math.floor(Math.random()*syms.length)];
+      s.style.left=(r.left+r.width/2+(Math.random()*26-13))+'px';
+      s.style.top=(r.top+r.height/2+(Math.random()*26-13))+'px';
+      s.style.fontSize=(0.55+Math.random()*0.6).toFixed(2)+'rem';
+      document.body.appendChild(s);
+      setTimeout(function(){ if(s.parentNode) s.parentNode.removeChild(s); },1150);
+    }, 280);
   })();
 
 
