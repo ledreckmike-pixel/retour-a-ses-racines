@@ -442,6 +442,53 @@
 
   .luna-spark{position:fixed;z-index:39;color:var(--gold);pointer-events:none;line-height:1;filter:drop-shadow(0 0 5px rgba(191,160,104,.85));animation:sparkFade 1.15s ease-out forwards}
   @keyframes sparkFade{0%{opacity:0;transform:scale(.3) translateY(0)}25%{opacity:1;transform:scale(1) translateY(-4px)}100%{opacity:0;transform:scale(.6) translateY(-18px)}}
+
+  /* ===== Tirage de carte v2 (roue + révélation) ===== */
+  .tk-hint{text-align:center;color:var(--ink-soft);font-size:.98rem;margin-bottom:1.2rem;min-height:1.4em}
+  .tk-wheelwrap{display:flex;justify-content:center;align-items:center;min-height:380px;margin-bottom:1.5rem}
+  .tk-wheel{--r:132px;position:relative;width:96px;height:96px;transition:transform 2.6s cubic-bezier(.12,.7,.2,1)}
+  .tk-slot{position:absolute;top:50%;left:50%;width:78px;height:118px;margin:-59px 0 0 -39px;transform:rotate(var(--a)) translateY(calc(var(--r) * -1))}
+  .tk-card{position:absolute;inset:0;border:0;padding:0;background:none;cursor:default;animation:tkFloat 4s ease-in-out infinite}
+  .tk-slot:nth-child(2n) .tk-card{animation-delay:-1.3s}
+  .tk-slot:nth-child(3n) .tk-card{animation-delay:-2.2s}
+  @keyframes tkFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+  .tk-wheel.ready .tk-card{cursor:pointer}
+  .tk-wheel.ready .tk-card:hover{filter:brightness(1.14) drop-shadow(0 0 12px rgba(191,160,104,.85))}
+  .tk-back{position:absolute;inset:0;border-radius:12px;background:linear-gradient(160deg,#4a3568,#2e2147);border:2px solid var(--gold);box-shadow:var(--shadow-soft)}
+  .tk-back::before{content:"\263E";position:absolute;inset:0;display:grid;place-items:center;font-size:2rem;color:var(--gold);filter:drop-shadow(0 0 5px rgba(191,160,104,.6))}
+  .tk-back::after{content:"";position:absolute;inset:6px;border:1px solid rgba(191,160,104,.4);border-radius:8px}
+  /* révélation */
+  .tk-reveal{position:fixed;inset:0;z-index:80;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;background:radial-gradient(circle at 50% 38%,rgba(60,42,86,.84),rgba(28,19,44,.94));backdrop-filter:blur(7px);animation:tkFade .5s ease both}
+  .tk-reveal[hidden]{display:none}
+  @keyframes tkFade{from{opacity:0}to{opacity:1}}
+  .tk-close{position:absolute;top:16px;right:22px;background:none;border:0;color:#EFE6D6;font-size:2.2rem;line-height:1;cursor:pointer;opacity:.75}
+  .tk-close:hover{opacity:1}
+  .tk-reveal-in{display:flex;flex-direction:column;align-items:center;gap:1.5rem;max-width:520px;text-align:center}
+  .tk-rcard{width:min(58vw,220px);aspect-ratio:500/864;perspective:1200px}
+  .tk-rinner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform 1s cubic-bezier(.16,1,.3,1);border-radius:14px}
+  .tk-rcard.flip .tk-rinner{transform:rotateY(180deg);animation:tkGlow 2.4s ease-in-out}
+  @keyframes tkGlow{0%,100%{filter:drop-shadow(0 26px 60px rgba(0,0,0,.7)) drop-shadow(0 0 22px rgba(191,160,104,.35))}50%{filter:drop-shadow(0 26px 60px rgba(0,0,0,.7)) drop-shadow(0 0 40px rgba(230,207,154,.85))}}
+  .tk-rback,.tk-rfront{position:absolute;inset:0;border-radius:14px;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden;border:3px solid var(--gold)}
+  .tk-rback{background:linear-gradient(160deg,#4a3568,#2e2147)}
+  .tk-rback::before{content:"\263E";position:absolute;inset:0;display:grid;place-items:center;font-size:3.6rem;color:var(--gold)}
+  .tk-rfront{transform:rotateY(180deg);background:#2e2147}
+  .tk-rfront img{width:100%;height:100%;object-fit:cover;display:block}
+  .tk-rtext{opacity:0;transform:translateY(12px);transition:opacity .6s,transform .6s;color:#F3EBDD}
+  .tk-rtext.show{opacity:1;transform:none}
+  .tk-thanks{font-family:var(--serif);font-style:italic;color:#E9D3A0;font-size:1.18rem;margin-bottom:.5rem;min-height:1.4em}
+  .tk-rname{font-family:var(--serif);font-size:2.1rem;color:#F7F0E0;margin-bottom:.5rem}
+  .tk-rmsg{color:rgba(243,235,221,.9);font-style:italic;font-size:1.08rem;margin:0 auto 1.3rem;max-width:42ch}
+  .tk-rtext .btn{margin:.3rem}
+  .tk-moon{position:fixed;left:0;top:0;z-index:81;width:56px;height:56px;opacity:0;pointer-events:none}
+  .tk-moon svg{width:100%;height:100%;filter:drop-shadow(0 0 10px rgba(191,160,104,.75))}
+  .tk-burst{position:fixed;z-index:82;color:var(--gold);pointer-events:none;font-size:1rem;line-height:1;opacity:1;transition:transform .85s ease-out,opacity .85s ease-out;filter:drop-shadow(0 0 6px rgba(230,207,154,.9))}
+  @media(max-width:680px){
+    .tk-wheelwrap{min-height:320px}
+    .tk-wheel{--r:106px;width:80px;height:80px}
+    .tk-slot{width:62px;height:94px;margin:-47px 0 0 -31px}
+    .tk-back::before{font-size:1.6rem}
+    .tk-rcard{width:min(70vw,200px)}
+  }
 </style>
 </head>
 <body>
@@ -600,24 +647,29 @@
     <div class="intro reveal">
       <span class="eyebrow">Nouveau · 15€ la question</span>
       <h2>Tirage de carte</h2>
-      <p class="lead">Une question vous préoccupe&nbsp;? Laissez une carte vous offrir un premier message. Mélangez le jeu, choisissez votre carte… et recevez votre guidance. 🌙</p>
+      <p class="lead">Une question vous préoccupe&nbsp;? Concentrez-vous, faites tourner les cartes… puis laissez votre main choisir. La carte vous révélera son message. 🌙</p>
     </div>
-    <p class="deck-hint" id="deckHint">Appuyez sur «&nbsp;Mélanger les cartes&nbsp;» pour commencer.</p>
-    <div class="deck" id="deck">
-      <button class="tcard fan0" type="button" aria-label="Carte 1"><span class="tc-inner"><span class="tc-back"></span><span class="tc-front"><span class="sym"></span><span class="nm"></span></span></span></button>
-      <button class="tcard fan1" type="button" aria-label="Carte 2"><span class="tc-inner"><span class="tc-back"></span><span class="tc-front"><span class="sym"></span><span class="nm"></span></span></span></button>
-      <button class="tcard fan2" type="button" aria-label="Carte 3"><span class="tc-inner"><span class="tc-back"></span><span class="tc-front"><span class="sym"></span><span class="nm"></span></span></span></button>
+    <p class="tk-hint" id="tkHint">Appuyez sur «&nbsp;Faire tourner les cartes&nbsp;».</p>
+    <div class="tk-wheelwrap">
+      <div class="tk-wheel" id="tkWheel"><div class="tk-slot" style="--a:0deg"><button class="tk-card" type="button" aria-label="Carte 1"><span class="tk-back"></span></button></div><div class="tk-slot" style="--a:30deg"><button class="tk-card" type="button" aria-label="Carte 2"><span class="tk-back"></span></button></div><div class="tk-slot" style="--a:60deg"><button class="tk-card" type="button" aria-label="Carte 3"><span class="tk-back"></span></button></div><div class="tk-slot" style="--a:90deg"><button class="tk-card" type="button" aria-label="Carte 4"><span class="tk-back"></span></button></div><div class="tk-slot" style="--a:120deg"><button class="tk-card" type="button" aria-label="Carte 5"><span class="tk-back"></span></button></div><div class="tk-slot" style="--a:150deg"><button class="tk-card" type="button" aria-label="Carte 6"><span class="tk-back"></span></button></div><div class="tk-slot" style="--a:180deg"><button class="tk-card" type="button" aria-label="Carte 7"><span class="tk-back"></span></button></div><div class="tk-slot" style="--a:210deg"><button class="tk-card" type="button" aria-label="Carte 8"><span class="tk-back"></span></button></div><div class="tk-slot" style="--a:240deg"><button class="tk-card" type="button" aria-label="Carte 9"><span class="tk-back"></span></button></div><div class="tk-slot" style="--a:270deg"><button class="tk-card" type="button" aria-label="Carte 10"><span class="tk-back"></span></button></div><div class="tk-slot" style="--a:300deg"><button class="tk-card" type="button" aria-label="Carte 11"><span class="tk-back"></span></button></div><div class="tk-slot" style="--a:330deg"><button class="tk-card" type="button" aria-label="Carte 12"><span class="tk-back"></span></button></div></div>
     </div>
     <div class="draw-actions reveal">
-      <button class="btn btn-primary" id="shuffleBtn" type="button">Mélanger les cartes</button>
+      <button class="btn btn-primary" id="tkBtn" type="button">Faire tourner les cartes</button>
     </div>
-    <div class="reveal-msg" id="revealMsg" hidden>
-      <div class="rm-symbol"></div>
-      <h3 class="rm-title"></h3>
-      <p class="rm-text"></p>
-      <a href="https://retourasesracine.simplybook.it/v2/" target="_blank" rel="noopener" class="btn btn-primary">Réserver mon tirage · 15€</a>
-      <button class="btn btn-ghost" id="redrawBtn" type="button">Tirer une autre carte</button>
+  </div>
+  <div class="tk-reveal" id="tkReveal" hidden>
+    <button class="tk-close" id="tkClose" aria-label="Fermer">&times;</button>
+    <div class="tk-reveal-in">
+      <div class="tk-rcard" id="tkRcard"><div class="tk-rinner"><span class="tk-rback"></span><span class="tk-rfront"><img id="tkImg" alt="" /></span></div></div>
+      <div class="tk-rtext" id="tkText">
+        <div class="tk-thanks" id="tkThanks"></div>
+        <h3 class="tk-rname" id="tkName"></h3>
+        <p class="tk-rmsg" id="tkMsg"></p>
+        <a href="https://retourasesracine.simplybook.it/v2/" target="_blank" rel="noopener" class="btn btn-primary">Réserver mon tirage · 15€</a>
+        <button class="btn btn-ghost" id="tkRedraw" type="button">Tirer une autre carte</button>
+      </div>
     </div>
+    <div class="tk-moon" id="tkMoon" aria-hidden="true"><svg viewBox="0 0 64 64"><defs><linearGradient id="tkG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F3E4BE"/><stop offset="1" stop-color="#BFA068"/></linearGradient></defs><path d="M42 7a25 25 0 1 0 15 45A20 20 0 0 1 42 7z" fill="url(#tkG)"/></svg></div>
   </div>
 </section>
 
@@ -802,6 +854,87 @@
     entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
   }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // ===== Tirage de carte v2 : roue + révélation + Luna =====
+  (function(){
+    var wheel=document.getElementById('tkWheel'); if(!wheel) return;
+    var btn=document.getElementById('tkBtn'), hint=document.getElementById('tkHint');
+    var overlay=document.getElementById('tkReveal'), rcard=document.getElementById('tkRcard');
+    var img=document.getElementById('tkImg'), nameEl=document.getElementById('tkName'), msgEl=document.getElementById('tkMsg');
+    var textBox=document.getElementById('tkText'), thanksEl=document.getElementById('tkThanks');
+    var moon=document.getElementById('tkMoon'), redraw=document.getElementById('tkRedraw'), closeBtn=document.getElementById('tkClose');
+    var luna=document.getElementById('luna');
+    var cardEls=Array.prototype.slice.call(wheel.querySelectorAll('.tk-card'));
+    var cards=[
+      {s:"moon",n:"La Lune",t:"Écoutez votre intuition : elle éclaire ce que la raison ne voit pas."},
+      {s:"star",n:"L'Étoile",t:"L'espoir renaît. Une lumière douce guide vos pas."},
+      {s:"sun",n:"Le Soleil",t:"Une renaissance rayonne en vous. Osez briller."},
+      {s:"papesse",n:"La Papesse",t:"Le silence détient vos réponses. Écoutez votre voix intérieure."},
+      {s:"imperatrice",n:"L'Impératrice",t:"L'abondance et la douceur reviennent vers vous. Accueillez-les."},
+      {s:"roue",n:"La Roue",t:"Un cycle se referme, un autre s'ouvre. Faites confiance au mouvement."},
+      {s:"amoureux",n:"Les Amoureux",t:"Un choix du cœur se présente. Suivez ce qui vous fait vibrer."},
+      {s:"force",n:"La Force",t:"Votre force est douce mais inébranlable, plus puissante que vos peurs."},
+      {s:"ermite",n:"L'Ermite",t:"Prenez le temps de vous retrouver. La sagesse vient du dedans."},
+      {s:"mort",n:"La Mort",t:"Une transformation profonde s'achève. Laissez partir pour renaître."},
+      {s:"temperance",n:"Tempérance",t:"Retrouvez l'équilibre. La patience mène à l'harmonie."},
+      {s:"monde",n:"Le Monde",t:"Un accomplissement se dessine. Vous êtes exactement là où vous devez être."}
+    ];
+    var thanks=["Merci d'avoir ouvert votre cœur ✨","Que cette carte vous éclaire 🌙","Belle guidance à vous ✨","Que la lumière vous accompagne 🌙"];
+    var rot=0, ready=false;
+    function spin(){
+      ready=false; btn.disabled=true; wheel.classList.remove('ready');
+      rot += 1080 + Math.floor(Math.random()*360);
+      wheel.style.transform='rotate('+rot+'deg)';
+      hint.textContent='Les cartes tournent…';
+      setTimeout(function(){ wheel.classList.add('ready'); ready=true; btn.disabled=false; btn.textContent='Refaire tourner'; hint.textContent='Choisissez votre carte, du bout du doigt.'; },2650);
+    }
+    function burst(x,y){
+      var syms=['✦','✧','⋆','✨'];
+      for(var i=0;i<18;i++){
+        (function(){
+          var s=document.createElement('span'); s.className='tk-burst'; s.textContent=syms[i%4];
+          s.style.left=x+'px'; s.style.top=y+'px'; s.style.fontSize=(0.6+Math.random()*0.7).toFixed(2)+'rem';
+          document.body.appendChild(s);
+          var ang=Math.random()*Math.PI*2, dist=40+Math.random()*95;
+          requestAnimationFrame(function(){ s.style.transform='translate('+(Math.cos(ang)*dist)+'px,'+(Math.sin(ang)*dist)+'px) scale('+(0.5+Math.random()).toFixed(2)+')'; s.style.opacity='0'; });
+          setTimeout(function(){ if(s.parentNode) s.parentNode.removeChild(s); },900);
+        })();
+      }
+    }
+    function flyMoon(){
+      var r=rcard.getBoundingClientRect();
+      var tx=r.right-8, ty=r.top+10;
+      moon.style.transition='none'; moon.style.opacity='0'; moon.style.transform='translate('+tx+'px,'+(ty+46)+'px) scale(.5)';
+      requestAnimationFrame(function(){
+        moon.style.transition='transform .7s cubic-bezier(.16,1,.3,1),opacity .5s';
+        moon.style.opacity='1'; moon.style.transform='translate('+tx+'px,'+ty+'px) scale(1)';
+      });
+      setTimeout(function(){
+        var mr=moon.getBoundingClientRect();
+        burst(mr.left+mr.width/2, mr.top+mr.height/2);
+        moon.style.transition='transform .3s ease,opacity .3s ease'; moon.style.opacity='0'; moon.style.transform='translate('+tx+'px,'+ty+'px) scale(1.7)';
+        thanksEl.textContent=thanks[Math.floor(Math.random()*thanks.length)];
+        textBox.classList.add('show');
+      },900);
+    }
+    function reveal(){
+      if(!ready) return; ready=false;
+      var c=cards[Math.floor(Math.random()*cards.length)];
+      img.src='assets/tarot/'+c.s+'.jpg'; img.alt=c.n;
+      nameEl.textContent=c.n; msgEl.textContent='« '+c.t+' »';
+      thanksEl.textContent=''; textBox.classList.remove('show'); rcard.classList.remove('flip');
+      overlay.hidden=false;
+      if(luna) luna.style.opacity='0';
+      setTimeout(function(){ rcard.classList.add('flip'); },550);
+      setTimeout(flyMoon,1550);
+    }
+    function close(){ overlay.hidden=true; if(luna) luna.style.opacity=''; }
+    btn.addEventListener('click',spin);
+    cardEls.forEach(function(c){ c.addEventListener('click',reveal); });
+    redraw.addEventListener('click',function(){ close(); spin(); });
+    closeBtn.addEventListener('click',function(){ close(); ready=true; });
+  })();
+
 
   // ===== Luna : vagabonde partout + étincelles =====
   (function(){
