@@ -424,20 +424,40 @@
   .visits .vl{font-size:.85rem;color:rgba(239,230,214,.82)}
 
 
-  /* ===== Luna : la lune-mascotte vivante ===== */
-  .luna{position:fixed;top:0;left:0;z-index:40;width:60px;height:60px;cursor:pointer;filter:drop-shadow(0 6px 16px rgba(126,91,176,.5));transform:translate(18px,calc(100dvh - 80px));transition:transform 6.5s cubic-bezier(.45,0,.55,1)}
+  /* ===== Luna : la chouette-mascotte vivante ===== */
+  .luna{position:fixed;top:0;left:0;z-index:40;width:56px;height:86px;cursor:pointer;filter:drop-shadow(0 6px 16px rgba(126,91,176,.5));transform:translate(18px,calc(100dvh - 104px));transition:transform 6.5s cubic-bezier(.45,0,.55,1)}
   .luna-moon{width:100%;height:100%;overflow:visible;display:block}
   .luna-eyes{transform-box:fill-box;transform-origin:center}
   .luna-bubble{position:absolute;left:72px;bottom:14px;white-space:nowrap;background:var(--ink);color:#FBF6EC;font-size:.82rem;font-weight:500;padding:.5rem .9rem;border-radius:12px;opacity:0;transform:translateX(-6px);transition:opacity .35s,transform .35s;pointer-events:none;box-shadow:var(--shadow-soft)}
   .luna-bubble::after{content:"";position:absolute;left:-4px;bottom:13px;width:10px;height:10px;background:var(--ink);transform:rotate(45deg)}
   .luna:hover .luna-bubble{opacity:1;transform:translateX(0)}
   @media (prefers-reduced-motion:no-preference){
-    .luna-moon{animation:lunaFloat 4.2s ease-in-out infinite}
-    .luna-eyes{animation:lunaBlink 5s ease-in-out infinite}
+    .luna-eyes{animation:lunaBlink 4s ease-in-out infinite}
   }
-  @keyframes lunaFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-  @keyframes lunaBlink{0%,90%,100%{transform:scaleY(1)}94%{transform:scaleY(.12)}}
-  @media(max-width:680px){.luna{width:52px;height:52px}.luna-bubble{display:none}}
+  @keyframes lunaBlink{0%,88%,100%{transform:scaleY(1)}93%{transform:scaleY(.1)}}
+
+  /* ===== Plantes holographiques 3D (WebGL) ===== */
+  .herb-deco{position:absolute;z-index:1;pointer-events:none}
+  .herb3d{display:block;width:100%;height:100%}
+  .herb-deco::before{content:"";position:absolute;inset:-14% -16%;z-index:-1;border-radius:50%;
+    background:radial-gradient(circle at 50% 56%, rgba(160,120,230,.30), rgba(160,120,230,0) 68%);filter:blur(5px)}
+  .contact .herb-deco::before{background:radial-gradient(circle at 50% 56%, rgba(95,200,255,.34), rgba(150,110,230,.18) 46%, rgba(95,200,255,0) 72%)}
+  .hero{overflow:hidden}
+  .contact .wrap{position:relative;z-index:2}
+  .herb-hero-l{left:-14px;bottom:-26px;width:188px;height:300px}
+  .herb-hero-r{right:-16px;bottom:-34px;width:208px;height:322px}
+  .herb-contact-l{left:-10px;bottom:-32px;width:212px;height:334px}
+  .herb-contact-r{right:-8px;bottom:-42px;width:198px;height:320px}
+  @media(max-width:820px){
+    .herb-hero-l{width:128px;height:206px}.herb-hero-r{width:138px;height:220px}
+    .herb-contact-l{width:150px;height:240px}.herb-contact-r{width:140px;height:228px}
+  }
+  @media(max-width:520px){
+    .herb-hero-r,.herb-contact-r{display:none}
+    .herb-hero-l{width:112px;height:180px}
+    .herb-contact-l{width:120px;height:196px}
+  }
+  @media(max-width:680px){.luna{width:46px;height:72px}.luna-bubble{display:none}}
 
 
   .luna-spark{position:fixed;z-index:39;color:var(--gold);pointer-events:none;line-height:1;filter:drop-shadow(0 0 5px rgba(191,160,104,.85));animation:sparkFade 1.15s ease-out forwards}
@@ -809,6 +829,8 @@
 
 <!-- ============ CONTACT ============ -->
 <section class="contact pad" id="contact">
+  <div class="herb-deco herb-contact-l" aria-hidden="true"><canvas class="herb3d" data-plant="aurora"></canvas></div>
+  <div class="herb-deco herb-contact-r" aria-hidden="true"><canvas class="herb3d" data-plant="aurora"></canvas></div>
   <div class="wrap contact-grid">
     <div class="reveal">
       <h2>Faites le premier pas vers votre paix</h2>
@@ -864,19 +886,47 @@
 </section>
 
 <!-- ============ FOOTER ============ -->
-<!-- Luna, la lune qui accompagne -->
+<!-- Luna, la chouette qui veille et accompagne -->
 <div class="luna" id="luna" title="Je veille sur vous">
   <span class="luna-bubble">Je veille sur vous ✨</span>
-  <svg class="luna-moon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <svg class="luna-moon" viewBox="0 0 64 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <defs><linearGradient id="lunaG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F3E4BE"/><stop offset="1" stop-color="#BFA068"/></linearGradient></defs>
-    <path d="M42 7a25 25 0 1 0 15 45A20 20 0 0 1 42 7z" fill="url(#lunaG)"/>
-    <g class="luna-eyes" fill="#3A1B30">
-      <ellipse cx="26" cy="33" rx="2.6" ry="3.7"/>
-      <ellipse cx="36" cy="32" rx="2.6" ry="3.7"/>
-      <circle cx="27" cy="31" r="0.8" fill="#fff"/>
-      <circle cx="37" cy="30" r="0.8" fill="#fff"/>
+    <g fill="none" stroke="url(#lunaG)" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round">
+      <!-- aigrettes -->
+      <path d="M20 22 L13 7 L28 18"/>
+      <path d="M44 22 L51 7 L36 18"/>
+      <!-- tete -->
+      <path d="M20 22 L32 15 L44 22 L52 29 L49 50 L32 63 L15 50 L12 29 Z"/>
+      <!-- arcade -->
+      <path d="M13 29 L32 41 L51 29"/>
+      <!-- bec -->
+      <path d="M28 51 L32 62 L36 51"/>
+      <path d="M32 51 L32 62"/>
+      <!-- aile gauche -->
+      <path d="M17 54 L5 61 L4 79 L13 93 L20 88 Z"/>
+      <path d="M8 66 L18 64"/>
+      <path d="M6 74 L19 74"/>
+      <path d="M9 84 L18 82"/>
+      <!-- aile droite -->
+      <path d="M47 54 L59 61 L60 79 L51 93 L44 88 Z"/>
+      <path d="M56 66 L46 64"/>
+      <path d="M58 74 L45 74"/>
+      <path d="M55 84 L46 82"/>
+      <!-- corps / plastron -->
+      <path d="M17 54 L20 88 L32 96 L44 88 L47 54"/>
+      <path d="M23 66 L32 73 L41 66"/>
+      <path d="M26 77 L32 83 L38 77"/>
+      <path d="M32 63 L36 71 L32 79 L28 71 Z"/>
+      <path d="M32 83 L32 96"/>
     </g>
-    <path d="M27 41 Q31 45 35 40" fill="none" stroke="#3A1B30" stroke-width="2" stroke-linecap="round"/>
+    <g class="luna-eyes">
+      <circle cx="22" cy="47" r="6.2" fill="url(#lunaG)"/>
+      <circle cx="42" cy="47" r="6.2" fill="url(#lunaG)"/>
+      <circle cx="22" cy="47" r="2.6" fill="#3A1B30"/>
+      <circle cx="42" cy="47" r="2.6" fill="#3A1B30"/>
+      <circle cx="23.3" cy="45.8" r="0.9" fill="#fff"/>
+      <circle cx="43.3" cy="45.8" r="0.9" fill="#fff"/>
+    </g>
   </svg>
 </div>
 
@@ -1215,6 +1265,118 @@
     redraw.addEventListener('click',function(){ reset(); setTimeout(shuffle,60); });
   })();
 
+</script>
+
+<!-- ===== Plantes holographiques 3D ===== -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+  if(!window.THREE) return;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var PAL={
+    mystic:{edge:0xb07bff, fill:0x9a6fe0, stem:0xd7a63f, pod:0xffcf6b, part:0xc9a7ff, add:false, op:0.30},
+    aurora:{edge:0x8fe9ff, fill:0x46b2e6, stem:0xbb8cff, pod:0xffe19a, part:0x9fe8ff, add:true,  op:0.30}
+  };
+  function glowTex(){
+    var c=document.createElement('canvas');c.width=c.height=128;var g=c.getContext('2d');
+    var gr=g.createRadialGradient(64,64,0,64,64,64);
+    gr.addColorStop(0,'rgba(255,255,255,1)');gr.addColorStop(.3,'rgba(255,255,255,.5)');gr.addColorStop(1,'rgba(255,255,255,0)');
+    g.fillStyle=gr;g.fillRect(0,0,128,128);return new THREE.CanvasTexture(c);
+  }
+  var GLOW=glowTex();
+  var LS=new THREE.Shape();LS.moveTo(0,0);LS.bezierCurveTo(.2,.3,.16,.74,0,1);LS.bezierCurveTo(-.16,.74,-.2,.3,0,0);
+  var LEAFGEO=new THREE.ShapeGeometry(LS);
+  var LEAFEDGE=new THREE.EdgesGeometry(LEAFGEO);
+  var VEIN=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,.002),new THREE.Vector3(0,1,.002)]);
+
+  function build(canvas){
+    var pal=PAL[canvas.getAttribute('data-plant')]||PAL.mystic;
+    var w=canvas.clientWidth,h=canvas.clientHeight;if(!w||!h) return null;
+    var renderer=new THREE.WebGLRenderer({canvas:canvas,alpha:true,antialias:true,preserveDrawingBuffer:true});
+    renderer.setClearColor(0x000000,0);renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+    renderer.setSize(w,h,false);
+    var scene=new THREE.Scene();
+    var cam=new THREE.PerspectiveCamera(42,w/h,.1,100);cam.position.set(0,0.05,3.5);
+    var grp=new THREE.Group();scene.add(grp);
+    var blend=pal.add?THREE.AdditiveBlending:THREE.NormalBlending;
+    // tige
+    var pp=[];for(var i=0;i<=8;i++){var t=i/8;pp.push(new THREE.Vector3(Math.sin(t*6)*0.09*Math.sin(t*3.14),-1.25+t*2.5,Math.cos(t*4)*0.04));}
+    var curve=new THREE.CatmullRomCurve3(pp);
+    grp.add(new THREE.Mesh(new THREE.TubeGeometry(curve,60,0.02,8,false),new THREE.MeshBasicMaterial({color:pal.stem})));
+    // feuilles holographiques
+    var fillMat=new THREE.MeshBasicMaterial({color:pal.fill,transparent:true,opacity:pal.op,side:THREE.DoubleSide,blending:blend,depthWrite:false});
+    var edgeMat=new THREE.LineBasicMaterial({color:pal.edge,transparent:true,opacity:.92,blending:blend,depthWrite:false});
+    var N=13;
+    for(var k=0;k<N;k++){
+      var tt=0.12+(k/(N-1))*0.8;var pos=curve.getPoint(Math.min(tt,1));
+      var pivot=new THREE.Object3D();pivot.position.copy(pos);pivot.rotation.y=k*2.399+(pal.add?1.0:0.3);
+      var leaf=new THREE.Object3D();leaf.rotation.z=-Math.PI/2+0.55;leaf.scale.setScalar(0.6*(1.02-tt*0.62));
+      leaf.add(new THREE.Mesh(LEAFGEO,fillMat));
+      leaf.add(new THREE.LineSegments(LEAFEDGE,edgeMat));
+      leaf.add(new THREE.Line(VEIN,edgeMat));
+      pivot.add(leaf);grp.add(pivot);
+    }
+    // cristaux d'énergie
+    var pods=[];var podMat=new THREE.MeshBasicMaterial({color:pal.pod,transparent:true,opacity:.85,blending:blend,depthWrite:false});
+    var podEdge=new THREE.LineBasicMaterial({color:pal.pod,transparent:true,opacity:.95,blending:blend,depthWrite:false});
+    var top=curve.getPoint(1);
+    for(var p=0;p<3;p++){
+      var ico=new THREE.IcosahedronGeometry(0.11-p*0.022,0);
+      var m=new THREE.Mesh(ico,podMat);m.position.set(top.x+(p-1)*0.05,top.y+0.02+p*0.06,top.z);
+      var e=new THREE.LineSegments(new THREE.EdgesGeometry(ico),podEdge);e.position.copy(m.position);
+      grp.add(m);grp.add(e);pods.push({m:m,e:e,s:0.01+p*0.004});
+    }
+    // particules
+    var PC=80,arr=new Float32Array(PC*3);
+    for(var q=0;q<PC;q++){var r=Math.random()*0.8,a=Math.random()*6.283;arr[q*3]=Math.cos(a)*r;arr[q*3+1]=-1.2+Math.random()*2.7;arr[q*3+2]=Math.sin(a)*r;}
+    var pg=new THREE.BufferGeometry();pg.setAttribute('position',new THREE.BufferAttribute(arr,3));
+    var pts=new THREE.Points(pg,new THREE.PointsMaterial({color:pal.part,size:0.05,map:GLOW,transparent:true,opacity:.9,blending:blend,depthWrite:false}));
+    grp.add(pts);
+    // halo lumineux (fonds sombres)
+    if(pal.add){
+      var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:GLOW,color:pal.part,transparent:true,opacity:.5,blending:THREE.AdditiveBlending,depthWrite:false}));
+      sp.scale.set(1.8,2.6,1);sp.position.set(0,0.1,-0.4);grp.add(sp);
+    }
+    return {renderer:renderer,scene:scene,cam:cam,grp:grp,pts:pts,arr:arr,pods:pods,canvas:canvas};
+  }
+
+  var items=[];
+  function draw(it){it.renderer.render(it.scene,it.cam);}
+  function ensure(cv){
+    if(cv.__built||!cv.clientWidth||!cv.clientHeight) return;
+    var it=build(cv); if(!it) return;
+    cv.__built=true; cv.__item=it; items.push(it);
+    if(reduce) it.grp.rotation.set(0.06,0.5,0);
+    draw(it);
+  }
+  function fit(it){var w=it.canvas.clientWidth,h=it.canvas.clientHeight;if(!w||!h)return;it.renderer.setSize(w,h,false);it.cam.aspect=w/h;it.cam.updateProjectionMatrix();draw(it);}
+  var canvases=[].slice.call(document.querySelectorAll('canvas.herb3d'));
+  canvases.forEach(ensure);
+  if('ResizeObserver' in window){
+    var ro=new ResizeObserver(function(ents){ents.forEach(function(e){var cv=e.target;if(!cv.__built)ensure(cv);else fit(cv.__item);});});
+    canvases.forEach(function(cv){ro.observe(cv);});
+  } else {
+    window.addEventListener('resize',function(){items.forEach(fit);},{passive:true});
+  }
+
+  if(reduce) return;
+
+  var t0=performance.now();
+  function frame(now){
+    var el=(now-t0)/1000;
+    items.forEach(function(it){
+      it.grp.rotation.y=el*0.4;
+      it.grp.rotation.x=Math.sin(el*0.5)*0.08;
+      it.grp.position.y=Math.sin(el*0.8)*0.05;
+      var a=it.arr;for(var i=1;i<a.length;i+=3){a[i]+=0.004;if(a[i]>1.5)a[i]=-1.2;}
+      it.pts.geometry.attributes.position.needsUpdate=true;
+      it.pods.forEach(function(pd){pd.m.rotation.y+=pd.s;pd.m.rotation.x+=pd.s*0.6;pd.e.rotation.copy(pd.m.rotation);});
+      draw(it);
+    });
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
 </script>
 </body>
 </html>
